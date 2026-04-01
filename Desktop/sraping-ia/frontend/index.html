@@ -261,6 +261,7 @@
     .badge-remix { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
     .badge-edit { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
     .badge-unknown { background: rgba(136, 136, 160, 0.15); color: var(--text-dim); }
+    .badge-preview { background: rgba(255, 23, 68, 0.12); color: var(--red); }
 
     .track-duration {
       font-size: 11px;
@@ -497,7 +498,7 @@
   <div class="empty-state" id="emptyState">
     <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     <h3>Busca tu musica favorita</h3>
-    <p>Escribe el nombre de un artista o cancion para empezar</p>
+    <p>Escribe el nombre de un artista o cancion para escuchar previews y descargar</p>
   </div>
 </main>
 
@@ -607,7 +608,8 @@ function renderTracks(tracks) {
             <div class="track-artists">${t.artists.join(', ')}</div>
             <div class="track-meta">
               <span class="badge ${mixClass}">${mixLabel}</span>
-              ${t.duration ? `<span class="track-duration">${t.duration}</span>` : ''}
+              <span class="badge badge-preview">Preview</span>
+              <span class="track-duration" id="dur-${t.id}"></span>
               ${t.label ? `<span class="track-label">${t.label}</span>` : ''}
             </div>
           </div>
@@ -625,6 +627,23 @@ function renderTracks(tracks) {
       </div>
     `;
   }).join('');
+
+  // Fetch actual durations in background
+  tracks.forEach(t => {
+    const durEl = document.getElementById(`dur-${t.id}`);
+    if (durEl) {
+      const tmpAudio = new Audio();
+      tmpAudio.preload = 'metadata';
+      tmpAudio.src = `${API}/api/preview/${t.id}`;
+      tmpAudio.addEventListener('loadedmetadata', () => {
+        if (tmpAudio.duration && isFinite(tmpAudio.duration)) {
+          durEl.textContent = formatTime(tmpAudio.duration);
+        }
+        tmpAudio.src = '';
+      });
+      tmpAudio.addEventListener('error', () => { durEl.textContent = ''; });
+    }
+  });
 }
 
 function esc(s) {
