@@ -1,0 +1,1 @@
+alert('Cargo search')
