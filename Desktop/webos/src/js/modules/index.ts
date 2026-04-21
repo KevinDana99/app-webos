@@ -1,2 +1,3 @@
-Modules.import('./player/index.js')
-Modules.import('./search/index.js')
+Modules.import('./player/index.js', function() {
+  Modules.import('./search/index.js')
+})

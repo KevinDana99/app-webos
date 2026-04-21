@@ -30,28 +30,16 @@ SPDX-License-Identifier: Apache-2.0
       }
     </style>
   </head>
-  <script src="./main.js"></script>
-  <script src="webOSTVjs-1.2.13/webOSTV.js" charset="utf-8"></script>
-  <script src="webOSTVjs-1.2.13/webOSTV-dev.js" charset="utf-8"></script>
-  <script type="text/javascript">
-    //sample code for calling LS2 API
-    webOS.service.request('luna://com.palm.systemservice', {
-      method: 'clock/getTime',
-      parameters: {},
-      onSuccess: function (args) {
-        console.log('UTC:', args.utc)
-      },
-      onFailure: function (args) {
-        console.log('Failed to getTime')
-      }
-    })
-  </script>
 
   <body>
     <div>
       <h1>Hello, World!</h1>
     </div>
+    <script src="./webOSTVjs-1.2.13/webOSTV.js" charset="utf-8"></script>
+    <script src="./webOSTVjs-1.2.13/webOSTV-dev.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6.2/dist/fetch.umd.min.js"></script>
+    <script src="main.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>

@@ -9,7 +9,10 @@
   "scripts": {
     "start": "bun src/index.ts",
     "dev": "bun --watch src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "build-app": "cd ./app && ares-package .",
+    "install-app": "cd ./app && ares-install -d tele2 *.ipk",
+    "launch-app": "cd ./app && ares-launch -d tele2 com.crunchyroll.webos"
   },
   "peerDependencies": {
     "typescript": "^5"
